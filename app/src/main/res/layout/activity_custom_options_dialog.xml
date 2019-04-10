@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".customOptionsDialog.CustomOptionsDialogActivity">
+
+        <Button
+            android:id="@+id/showDialog3Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_recycler_item_border"
+            android:text="@string/text_dialog_3_item" />
+
+    </LinearLayout>
+</layout>
