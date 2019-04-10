@@ -31,7 +31,8 @@
         <activity android:name=".customEditTextNoteUnderLine.CustomNoteUnderLineActivity" />
         <activity android:name=".customOptionsDialog.CustomOptionsDialogActivity" />
         <activity android:name=".alarmRepeat.AlarmActivity" />
-        <activity android:name=".camera2.Camera2Activity" />
+        <activity android:name=".camera2.Camera2Activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <receiver android:name=".alarmRepeat.AlarmReceiver" />
 
