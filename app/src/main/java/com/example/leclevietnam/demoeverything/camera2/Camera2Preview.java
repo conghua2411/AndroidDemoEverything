@@ -796,9 +796,8 @@ public class Camera2Preview extends Fragment {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     try {
-                        //get wiki definition
+                        // url get wiki definition
                         String urlWiki = String.format("https://vi.wikipedia.org/w/api.php?action=query&format=json&titles=%s&prop=extracts&exintro&explaintext", text);
-//        String urlWiki = String.format("https://vi.wikipedia.org/w/api.php?action=query&format=json&titles=%s&prop=extracts&exintro&explaintext", "phở");
 
                         Log.d("getWiki", "onImageSearchURL: " + urlWiki);
 
@@ -817,10 +816,8 @@ public class Camera2Preview extends Fragment {
                                                 String content = response.getJSONObject("query").getString("pages");
 
                                                 if (content.contains("extract")) {
-//                                                    mTextDetail.setText(content.substring(content.indexOf("\"extract\":\"") + 11, content.indexOf("\"}}")));
                                                     mTextDetail.setText(String.format(getString(R.string.text_search_result), text, content.substring(content.indexOf("\"extract\":\"") + 11, content.indexOf("\"}}"))));
                                                 } else {
-//                                                    mTextDetail.setText("Not found definition");
                                                     mTextDetail.setText(String.format(getString(R.string.text_search_result), text, "Not found definition"));
 
                                                 }
@@ -840,7 +837,6 @@ public class Camera2Preview extends Fragment {
 
 
                         org.jsoup.nodes.Document doc = Jsoup.connect("https://www.google.com/search?safe=active&tbm=isch&q=" + "món " + text).userAgent("Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36").get();
-//                        org.jsoup.nodes.Document doc = Jsoup.connect("https://www.google.com/search?safe=active&tbm=isch&q=" + "món " + "phở").userAgent("Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36").get();
 
                         Elements imgs = doc.select("#rg div.rg_di .rg_meta");
 
@@ -854,7 +850,6 @@ public class Camera2Preview extends Fragment {
                                 Log.d("test_image", "doInBackground:" + imageString.substring(imageString.indexOf("\"ou\":\"") + 6, imageString.indexOf("\",\"ow\"")));
 
                                 listImgBase64.add(imageString.substring(imageString.indexOf("\"ou\":\"") + 6, imageString.indexOf("\",\"ow\"")));
-//                            Log.d("test_image", "doInBackground:" + imageString);
                             }
                         }
 
