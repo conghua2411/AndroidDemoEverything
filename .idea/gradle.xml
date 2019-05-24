@@ -8,7 +8,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/BinderAnnotation" />
+            <option value="$PROJECT_DIR$/BinderCompiler" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/binder" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

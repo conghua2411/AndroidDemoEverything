@@ -1,13 +1,13 @@
 package com.example.leclevietnam.demoeverything.customOptionsDialog.dialog
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.leclevietnam.demoeverything.R
 
-class OptionsAdapter(listOpt: List<String>) : RecyclerView.Adapter<OptionsAdapter.OptionViewHolder>() {
+class OptionsAdapter(listOpt: List<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<OptionsAdapter.OptionViewHolder>() {
 
     private val listOptions = listOpt
     private var mListener:OptionsDialogListener? = null
@@ -20,7 +20,7 @@ class OptionsAdapter(listOpt: List<String>) : RecyclerView.Adapter<OptionsAdapte
         mListener = listener
     }
 
-    inner class OptionViewHolder(val view: View): RecyclerView.ViewHolder(view)
+    inner class OptionViewHolder(val view: View): androidx.recyclerview.widget.RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): OptionViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_option_dialog, parent, false)

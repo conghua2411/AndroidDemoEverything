@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".kotlinDemo.KotlinDemoActivity">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.leclevietnam.demoeverything.kotlinDemo.DemoViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtView"
+            android:layout_centerInParent="true"
+            android:textSize="30sp"
+            android:text="@{viewModel.count.toString()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btnClick"
+            android:layout_below="@+id/txtView"
+            android:text="@{viewModel.text}"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.counting()}"/>
+
+    </RelativeLayout>
+</layout>

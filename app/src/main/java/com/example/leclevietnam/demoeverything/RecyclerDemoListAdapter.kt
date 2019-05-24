@@ -1,17 +1,17 @@
 package com.example.leclevietnam.demoeverything
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class RecyclerDemoListAdapter(private val listDemo: Array<String>, listener: DemoListListener) : RecyclerView.Adapter<RecyclerDemoListAdapter.ViewHolder>(){
+class RecyclerDemoListAdapter(private val listDemo: Array<String>, listener: DemoListListener) : androidx.recyclerview.widget.RecyclerView.Adapter<RecyclerDemoListAdapter.ViewHolder>(){
 
     private val mListener: DemoListListener = listener
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(val view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
         var textView: TextView = view.findViewById(R.id.tv_recycler_list_demo)
 
     }

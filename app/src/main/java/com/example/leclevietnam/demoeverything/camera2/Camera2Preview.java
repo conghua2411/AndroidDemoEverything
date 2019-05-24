@@ -28,19 +28,20 @@ import android.media.ImageReader;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -53,7 +54,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -135,7 +135,7 @@ public class Camera2Preview extends Fragment {
 
     private Size mPreviewSize;
 
-    //        private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
+    //    private static final Size DESIRED_PREVIEW_SIZE = new Size(640, 480);
     private static final Size DESIRED_PREVIEW_SIZE = new Size(1024, 768);
 
     private static final int FINDER_BOX_WIDTH = 400;
@@ -343,10 +343,12 @@ public class Camera2Preview extends Fragment {
             if (isDetecting && !isProcessingImage && !isPaused) {
                 isProcessingImage = true;
                 Log.d(TAG, "onImageAvailable: send bitmap");
-                new OrcDetectAsyncTask().execute(rotateBitmap);
 
-//                baseAPI.setImage(rotateBitmap);
-//                Log.d("orc_text_hello", "onImageAvailable: " + baseAPI.getUTF8Text());
+                if (Build.MANUFACTURER.equalsIgnoreCase("LGE")) {
+                    new OrcDetectAsyncTask().execute(rotateBitmap);
+                } else {
+                    new OrcDetectAsyncTask().execute(bitmap2);
+                }
             }
 
 //            if (imgBitmap2 != null) {

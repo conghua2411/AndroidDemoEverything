@@ -1,15 +1,23 @@
 package com.example.leclevietnam.demoeverything
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
+import com.example.leclevietnam.demoeverything.SnapRecyclerDemo.SnapRecyclerActivity
 import com.example.leclevietnam.demoeverything.alarmRepeat.AlarmActivity
+import com.example.leclevietnam.demoeverything.annotationProcessing.AnnoProcessActivity
+import com.example.leclevietnam.demoeverything.automateViewPager.AutoPagerActivity
 import com.example.leclevietnam.demoeverything.camera2.Camera2Activity
 import com.example.leclevietnam.demoeverything.cameraDemo.CameraActivity
 import com.example.leclevietnam.demoeverything.customEditTextNoteUnderLine.CustomNoteUnderLineActivity
+import com.example.leclevietnam.demoeverything.javaDemo.JavaDemoActivity
+import com.example.leclevietnam.demoeverything.kotlinDemo.KotlinDemoActivity
+import com.example.leclevietnam.demoeverything.mediaProjectionDemo.MediaProjectionACtivity
+import com.example.leclevietnam.demoeverything.recordSurfaceView.RecordSufaceActivity
+import com.example.leclevietnam.demoeverything.socketDemo.SocketDemo
 
 class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListener  {
 
@@ -20,23 +28,44 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
         private const val ALARM_REPEAT = "ALARM_REPEAT"
         private const val CAMERA_DEMO = "CAMERA_DEMO"
         private const val CAMERA2_DEMO = "CAMERA2_DEMO"
+        private const val SNAP_RECYCLER_DEMO = "SNAP_RECYCLER_DEMO"
+        private const val RECORD_SURFACE = "RECORD_SURFACE"
+        private const val MEDIA_PROJECTION_DEMO = "MEDIA_PROJECTION_DEMO"
+        private const val SOCKET_DEMO = "SOCKET_DEMO"
+        private const val JAVA_DEMO = "JAVA_DEMO"
+        private const val AUTO_PAGER = "AUTO_PAGER"
+        private const val ANNO_PROCESS = "ANNO_PROCESS"
+        private const val KOTLIN_DEMO = "KOTLIN_DEMO"
     }
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
+    private lateinit var viewAdapter: androidx.recyclerview.widget.RecyclerView.Adapter<*>
+    private lateinit var viewManager: androidx.recyclerview.widget.RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewManager = LinearLayoutManager(this)
+        viewManager = androidx.recyclerview.widget.LinearLayoutManager(this)
 
-        val listDemo = arrayOf(CUSTOM_EDIT_TEXT, CUSTOM_OPTIONS_DIALOG, ALARM_REPEAT, CAMERA_DEMO, CAMERA2_DEMO)
+        val listDemo = arrayOf(
+                CUSTOM_EDIT_TEXT,
+                CUSTOM_OPTIONS_DIALOG,
+                ALARM_REPEAT,
+                CAMERA_DEMO,
+                CAMERA2_DEMO,
+                SNAP_RECYCLER_DEMO,
+                RECORD_SURFACE,
+                MEDIA_PROJECTION_DEMO,
+                SOCKET_DEMO,
+                JAVA_DEMO,
+                AUTO_PAGER,
+                ANNO_PROCESS,
+                KOTLIN_DEMO)
 
         viewAdapter = RecyclerDemoListAdapter(listDemo, this)
 
-        recyclerView = findViewById<RecyclerView>(R.id.recycler_list_demo).apply {
+        recyclerView = findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.recycler_list_demo).apply {
             setHasFixedSize(true)
 
             layoutManager = viewManager
@@ -62,6 +91,30 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
             }
             CAMERA2_DEMO -> {
                 startActivity(Intent(this, Camera2Activity::class.java))
+            }
+            SNAP_RECYCLER_DEMO -> {
+                startActivity(Intent(this, SnapRecyclerActivity::class.java))
+            }
+            RECORD_SURFACE -> {
+                startActivity(Intent(this, RecordSufaceActivity::class.java))
+            }
+            MEDIA_PROJECTION_DEMO -> {
+                startActivity(Intent(this, MediaProjectionACtivity::class.java))
+            }
+            SOCKET_DEMO -> {
+                startActivity(Intent(this, SocketDemo::class.java))
+            }
+            JAVA_DEMO -> {
+                startActivity(Intent(this, JavaDemoActivity::class.java))
+            }
+            AUTO_PAGER -> {
+                startActivity(Intent(this, AutoPagerActivity::class.java))
+            }
+            ANNO_PROCESS -> {
+                startActivity(Intent(this, AnnoProcessActivity::class.java))
+            }
+            KOTLIN_DEMO -> {
+                startActivity(Intent(this, KotlinDemoActivity::class.java))
             }
             else -> {
                 Log.d("onClick_main", "demo name : $demoName")

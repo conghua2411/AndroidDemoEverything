@@ -1,8 +1,8 @@
 package com.example.leclevietnam.demoeverything.camera2.ImageViewPager;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,7 @@ public class ViewPagerImageAdapter extends PagerAdapter {
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.viewpager_image_item, container, false);
+        View view = inflater.inflate(R.layout.item_viewpager_image, container, false);
 
         ImageView imageItem = view.findViewById(R.id.img_item);
 
