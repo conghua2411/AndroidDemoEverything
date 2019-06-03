@@ -1,10 +1,9 @@
 package com.example.leclevietnam.demoeverything.javaDemo.dagger2.dagger;
 
+import com.example.leclevietnam.demoeverything.javaDemo.dagger2.car.InjectClass;
 import com.example.leclevietnam.demoeverything.javaDemo.dagger2.car.Rims;
 import com.example.leclevietnam.demoeverything.javaDemo.dagger2.car.Tires;
 import com.example.leclevietnam.demoeverything.javaDemo.dagger2.car.Wheels;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -27,7 +26,7 @@ public abstract class WheelsModule {
     }
 
     @Provides
-    static Wheels provideWheels(Rims rims, Tires tires) {
-        return new Wheels(rims, tires);
+    static Wheels provideWheels(Rims rims, Tires tires, InjectClass injectClass) {
+        return new Wheels(rims, tires, injectClass);
     }
 }

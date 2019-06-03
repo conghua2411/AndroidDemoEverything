@@ -3,8 +3,6 @@ package com.example.leclevietnam.demoeverything
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import com.example.leclevietnam.demoeverything.SnapRecyclerDemo.SnapRecyclerActivity
 import com.example.leclevietnam.demoeverything.alarmRepeat.AlarmActivity
@@ -12,11 +10,18 @@ import com.example.leclevietnam.demoeverything.annotationProcessing.AnnoProcessA
 import com.example.leclevietnam.demoeverything.automateViewPager.AutoPagerActivity
 import com.example.leclevietnam.demoeverything.camera2.Camera2Activity
 import com.example.leclevietnam.demoeverything.cameraDemo.CameraActivity
+import com.example.leclevietnam.demoeverything.constraintDemo.ConstraintActivity
 import com.example.leclevietnam.demoeverything.customEditTextNoteUnderLine.CustomNoteUnderLineActivity
+import com.example.leclevietnam.demoeverything.extendBottomSheet.BottomSheetActivity
 import com.example.leclevietnam.demoeverything.javaDemo.JavaDemoActivity
+import com.example.leclevietnam.demoeverything.koinDemo.KoinActivity
 import com.example.leclevietnam.demoeverything.kotlinDemo.KotlinDemoActivity
 import com.example.leclevietnam.demoeverything.mediaProjectionDemo.MediaProjectionACtivity
+import com.example.leclevietnam.demoeverything.motionLayout.MotionLayoutActivity
+import com.example.leclevietnam.demoeverything.paging.PagingActivity
 import com.example.leclevietnam.demoeverything.recordSurfaceView.RecordSufaceActivity
+import com.example.leclevietnam.demoeverything.retrofit.RetrofitActivity
+import com.example.leclevietnam.demoeverything.rxJavaDemo.RxJavaActivity
 import com.example.leclevietnam.demoeverything.socketDemo.SocketDemo
 
 class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListener  {
@@ -36,6 +41,13 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
         private const val AUTO_PAGER = "AUTO_PAGER"
         private const val ANNO_PROCESS = "ANNO_PROCESS"
         private const val KOTLIN_DEMO = "KOTLIN_DEMO"
+        private const val EXTEND_BOTTOM_SHEET = "EXTEND_BOTTOM_SHEET"
+        private const val CONSTRAINT_DEMO = "CONSTRAINT_DEMO"
+        private const val MOTION_LAYOUT = "MOTION_LAYOUT"
+        private const val KOIN_DEMO = "KOIN_DEMO"
+        private const val RX_JAVA_DEMO = "RX_JAVA_DEMO"
+        private const val RETROFIT_DEMO = "RETROFIT_DEMO"
+        private const val PAGING_DEMO = "PAGING_DEMO"
     }
 
     private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
@@ -61,7 +73,14 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
                 JAVA_DEMO,
                 AUTO_PAGER,
                 ANNO_PROCESS,
-                KOTLIN_DEMO)
+                KOTLIN_DEMO,
+                EXTEND_BOTTOM_SHEET,
+                CONSTRAINT_DEMO,
+                MOTION_LAYOUT,
+                KOIN_DEMO,
+                RX_JAVA_DEMO,
+                RETROFIT_DEMO,
+                PAGING_DEMO)
 
         viewAdapter = RecyclerDemoListAdapter(listDemo, this)
 
@@ -115,6 +134,27 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
             }
             KOTLIN_DEMO -> {
                 startActivity(Intent(this, KotlinDemoActivity::class.java))
+            }
+            EXTEND_BOTTOM_SHEET -> {
+                startActivity(Intent(this, BottomSheetActivity::class.java))
+            }
+            CONSTRAINT_DEMO -> {
+                startActivity(Intent(this, ConstraintActivity::class.java))
+            }
+            MOTION_LAYOUT -> {
+                startActivity(Intent(this, MotionLayoutActivity::class.java))
+            }
+            KOIN_DEMO -> {
+                startActivity(Intent(this, KoinActivity::class.java))
+            }
+            RX_JAVA_DEMO -> {
+                startActivity(Intent(this, RxJavaActivity::class.java))
+            }
+            RETROFIT_DEMO -> {
+                startActivity(Intent(this, RetrofitActivity::class.java))
+            }
+            PAGING_DEMO -> {
+                startActivity(Intent(this, PagingActivity::class.java))
             }
             else -> {
                 Log.d("onClick_main", "demo name : $demoName")

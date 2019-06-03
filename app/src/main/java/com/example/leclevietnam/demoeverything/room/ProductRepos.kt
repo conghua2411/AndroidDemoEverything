@@ -7,7 +7,6 @@ import javax.inject.Inject
 class ProductRepos @Inject constructor(private val productDAO: ProductDAO) {
 
 
-
     fun insert(products: List<Product>): Observable<Boolean> {
         return Observable.fromCallable {
             productDAO.insertAll(products)
@@ -15,9 +14,13 @@ class ProductRepos @Inject constructor(private val productDAO: ProductDAO) {
         }
     }
 
-    fun getProductById(id: Long) = Single.fromCallable {productDAO.getProductById(id)}
+    fun getProductById(id: Long) = Single.fromCallable { productDAO.getProductById(id) }
 
-    fun getAllProductById() = Observable.fromCallable {productDAO.getAllProduct()}
+    fun getAllProductList() = Observable.fromCallable { productDAO.getAllProductList() }
+
+    fun getAllProduct() = Observable.fromCallable { productDAO.getAllProduct() }
+
+    fun getAllProductPaging() = Observable.fromCallable { productDAO.getAllProductPaging() }
 
     fun update(products: Product): Observable<Boolean> {
         return Observable.fromCallable {

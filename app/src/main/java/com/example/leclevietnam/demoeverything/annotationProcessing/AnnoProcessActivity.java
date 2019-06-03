@@ -10,6 +10,7 @@ import com.example.binder.Binding;
 import com.example.binderannotation.BindView;
 import com.example.binderannotation.OnClick;
 import com.example.leclevietnam.demoeverything.R;
+import com.example.leclevietnam.demoeverything.annotationProcessing.bindViewAnno.BindView2;
 
 public class AnnoProcessActivity extends AppCompatActivity {
 

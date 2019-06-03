@@ -5,13 +5,14 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="10dp"
-    android:layout_centerInParent="true"
-    android:background="@drawable/custom_recycler_item_border">
+    android:layout_marginBottom="10dp"
+    android:layout_centerInParent="true">
 
     <TextView
         android:id="@+id/tv_recycler_list_demo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:background="@drawable/custom_btn_click"/>
 
 </RelativeLayout>

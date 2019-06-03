@@ -11,4 +11,5 @@
     <string name="intro_message">intro_message</string>
 
     <string name="text_search_result">text search : %s\n%s</string>
+    <string name="cat_n">cat %s</string>
 </resources>

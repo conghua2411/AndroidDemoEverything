@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".koinDemo.KoinActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.leclevietnam.demoeverything.koinDemo.KoinViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/sayHello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@{viewModel.hello}"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnScopeKoin"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/sayHello"
+            android:text="scopeKoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.gotoScopeKoin()}" />
+
+    </RelativeLayout>
+</layout>

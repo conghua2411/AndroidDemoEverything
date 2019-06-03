@@ -18,8 +18,6 @@ class KotlinDemoActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModel: DemoViewModel
 
-    lateinit var compositeDisposable: CompositeDisposable
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val kotlinActivityComponent = DaggerKotlinActivityComponent.builder()
@@ -30,21 +28,17 @@ class KotlinDemoActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_kotlin_demo)
 
+
 //        val productDatabase = Room.databaseBuilder(this, ProductDatabase::class.java, "product.db").build()
 //
 //        val productRepos = ProductRepos(productDatabase.productDao())
 //
-//        viewModel = DemoViewModel(productRepos)
+//        constraintViewModel = DemoViewModel(productRepos)
 //
 //        productRepos.getAllProductById()
 
         binding.viewModel = viewModel
 
-//        viewModel.counting()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
+//        constraintViewModel.counting()
     }
 }

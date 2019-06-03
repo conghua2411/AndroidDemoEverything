@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".retrofit.RetrofitActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.leclevietnam.demoeverything.retrofit.RetrofitViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btnGetData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="btnGetData"
+            android:onClick="@{() -> viewModel.fetchData2()}"/>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnGetData"
+            android:scrollbars="vertical">
+
+            <TextView
+                android:id="@+id/txtResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.textData}" />
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

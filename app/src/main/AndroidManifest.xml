@@ -20,7 +20,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".motionLayout.MotionLayoutActivity"></activity>
+        <activity android:name=".paging.PagingActivity"></activity>
+        <activity android:name=".retrofit.RetrofitActivity" />
+        <activity android:name=".rxJavaDemo.RxJavaActivity" />
+        <activity android:name=".koinDemo.scope.KoinScopeActivity" />
+        <activity android:name=".koinDemo.KoinActivity" />
+        <activity android:name=".constraintDemo.ConstraintActivity" />
+        <activity android:name=".extendBottomSheet.BottomSheetActivity" />
+        <activity android:name=".motionLayout.MotionLayoutActivity" />
         <activity android:name=".kotlinDemo.KotlinDemoActivity" />
         <activity android:name=".annotationProcessing.AnnoProcessActivity" />
         <activity android:name=".automateViewPager.AutoPagerActivity" />
