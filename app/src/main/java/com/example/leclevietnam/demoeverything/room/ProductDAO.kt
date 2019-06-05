@@ -1,14 +1,13 @@
 package com.example.leclevietnam.demoeverything.room
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.paging.DataSource
 import androidx.room.*
 
 @Dao
 interface ProductDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.FAIL)
     fun insertAll(products: List<Product>)
 
     @Query("SELECT * FROM product WHERE id= :id")

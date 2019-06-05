@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.leclevietnam.demoeverything.koinDemo.A
 import com.example.leclevietnam.demoeverything.retrofit.coroutine.CoroutineService
-import com.google.android.gms.tasks.Tasks.await
 import kotlinx.coroutines.*
 
 class RetrofitViewModel(private val coroutineService: CoroutineService) : ViewModel() {

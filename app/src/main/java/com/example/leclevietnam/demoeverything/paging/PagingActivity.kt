@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leclevietnam.demoeverything.DemoApplication
 import com.example.leclevietnam.demoeverything.R
 import com.example.leclevietnam.demoeverything.databinding.ActivityPagingBinding
+import com.example.leclevietnam.demoeverything.paging.model.Photo
+import com.example.leclevietnam.demoeverything.paging.photoAdapter.PhotoAdapter
 import com.example.leclevietnam.demoeverything.room.Product
 import javax.inject.Inject
 
@@ -22,6 +24,8 @@ class PagingActivity : AppCompatActivity(), PagingNavigator, PagingAdapter.ItemL
     lateinit var pagingViewModel: PagingViewModel
 
     lateinit var pagingAdapter: PagingAdapter
+
+    lateinit var photoAdapter: PhotoAdapter
 
     lateinit var pagingRecyclerAdapter: PRecyclerAdapter
 
@@ -70,5 +74,18 @@ class PagingActivity : AppCompatActivity(), PagingNavigator, PagingAdapter.ItemL
         })
 
         binding.rvPagingList.adapter = pagingAdapter
+    }
+
+    override fun updatePhotos(photoLiveData: LiveData<PagedList<Photo>>) {
+        binding.rvPagingList.layoutManager = LinearLayoutManager(applicationContext)
+
+        photoAdapter = PhotoAdapter()
+
+        photoLiveData.observe(this, Observer {
+            Log.d("Paging", "PagedList photo ${it.size} : $it")
+            photoAdapter.submitList(it)
+        })
+
+        binding.rvPagingList.adapter = photoAdapter
     }
 }

@@ -7,12 +7,12 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <!--<ImageView-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:src="@drawable/alo"-->
-            <!--android:scaleType="centerCrop"/>-->
+        <ImageView
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/txtPagingItemText"

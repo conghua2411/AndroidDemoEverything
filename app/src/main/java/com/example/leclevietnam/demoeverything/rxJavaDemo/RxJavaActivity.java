@@ -9,6 +9,7 @@ import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -16,9 +17,12 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
-import io.reactivex.internal.schedulers.SingleScheduler;
+import io.reactivex.internal.operators.observable.ObservableDefer;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.Single;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.ReplaySubject;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,16 +31,12 @@ import android.view.View;
 import com.example.leclevietnam.demoeverything.R;
 import com.example.leclevietnam.demoeverything.databinding.ActivityRxJavaBinding;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Inject;
 
 public class RxJavaActivity extends AppCompatActivity {
 
@@ -52,34 +52,37 @@ public class RxJavaActivity extends AppCompatActivity {
 
     }
 
+    // get observer
+    private <T> Observer<T> getObserver() {
+        return new Observer<T>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                binding.setMagicText("onSubscribe");
+            }
+
+            @Override
+            public void onNext(T t) {
+                binding.setMagicText(binding.getMagicText() + "\nonNext : " + t.toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                binding.setMagicText(binding.getMagicText() + "\nonError : " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                binding.setMagicText(binding.getMagicText() + "\nonComplete");
+            }
+        };
+    }
+
     // simple
     private void simple() {
         Observable.just("1", "2", "3")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe: " + d.toString());
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        Log.d(TAG, "onNext: ");
-                        binding.setMagicText(binding.getMagicText() + "\n" + s);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "onError: ");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "onComplete: ");
-                        binding.setMagicText(binding.getMagicText() + "onComplete");
-                    }
-                });
+                .subscribe(this.<String>getObserver());
     }
 
     // map
@@ -102,29 +105,7 @@ public class RxJavaActivity extends AppCompatActivity {
                         return s + "umbala";
                     }
                 })
-                .subscribe(new Observer<String>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Log.d(TAG, "onSubscribe: ");
-                    }
-
-                    @Override
-                    public void onNext(String s) {
-                        Log.d(TAG, "onNext: ");
-                        binding.setMagicText(binding.getMagicText() + "\n" + s);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "onError: ");
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "onComplete: ");
-                        binding.setMagicText(binding.getMagicText() + "\n" + "onComplete");
-                    }
-                });
+                .subscribe(this.<String>getObserver());
     }
 
     // zip
@@ -165,27 +146,7 @@ public class RxJavaActivity extends AppCompatActivity {
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Integer>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        binding.setMagicText("onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(List<Integer> integers) {
-                        binding.setMagicText(binding.getMagicText() + "\n" + integers.toString());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        binding.setMagicText(binding.getMagicText() + "\n" + e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        binding.setMagicText(binding.getMagicText() + "\nonComplete");
-                    }
-                });
+                .subscribe(this.<List<Integer>>getObserver());
     }
 
     // take
@@ -194,27 +155,7 @@ public class RxJavaActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .take(3)
-                .subscribe(new Observer<Integer>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        binding.setMagicText("onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        binding.setMagicText(binding.getMagicText() + "\n" + integer);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        binding.setMagicText(binding.getMagicText() + "\n" + e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        binding.setMagicText(binding.getMagicText() + "\nonComplete");
-                    }
-                });
+                .subscribe(this.<Integer>getObserver());
     }
 
     // timer
@@ -222,27 +163,7 @@ public class RxJavaActivity extends AppCompatActivity {
         Observable.timer(2, TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        binding.setMagicText("onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        binding.setMagicText(binding.getMagicText() + "\n" + aLong);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        binding.setMagicText(binding.getMagicText() + "\n" + e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        binding.setMagicText(binding.getMagicText() + "\nonComplete");
-                    }
-                });
+                .subscribe(this.<Long>getObserver());
     }
 
     // interval
@@ -375,7 +296,7 @@ public class RxJavaActivity extends AppCompatActivity {
 //                    }
 //                });
 
-        Observable.just(1, 2, 3, 4, 5, 6)
+        Flowable.just(1, 2, 3, 4, 5, 6)
                 .reduceWith(new Callable<List<Integer>>() {
                     @Override
                     public List<Integer> call() throws Exception {
@@ -470,7 +391,7 @@ public class RxJavaActivity extends AppCompatActivity {
 //                    }
 //                });
 
-        Observable.just(1,2,3,4,5,6,7)
+        Observable.just(1, 2, 3, 4, 5, 6, 7)
                 .buffer(3, new Callable<List<Integer>>() {
                     @Override
                     public List<Integer> call() {
@@ -483,27 +404,7 @@ public class RxJavaActivity extends AppCompatActivity {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Integer>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        binding.setMagicText("onSubscribe");
-                    }
-
-                    @Override
-                    public void onNext(List<Integer> integers) {
-                        binding.setMagicText(binding.getMagicText() + "\nonNext\n" + integers.toString());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        binding.setMagicText(binding.getMagicText() + "\nonError\n" + e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        binding.setMagicText(binding.getMagicText() + "\nonComplete");
-                    }
-                });
+                .subscribe(this.<List<Integer>>getObserver());
     }
 
     // filter
@@ -539,40 +440,280 @@ public class RxJavaActivity extends AppCompatActivity {
 //                    }
 //                });
 
-        Observable.just(1,2,3,4,5,6,7,8,9)
+        Observable.just(1, 2, 3, 4, 5, 6, 7, 8, 9)
                 .filter(new Predicate<Integer>() {
                     @Override
                     public boolean test(Integer integer) {
-                        return integer%2 == 0;
+                        return integer % 2 == 0;
                     }
                 })
                 .buffer(2)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<Integer>>() {
+                .subscribe(this.<List<Integer>>getObserver());
+    }
+
+    // skip
+    private void skip() {
+        Observable.just(1, 2, 3, 4, 5, 6)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .skip(2)
+                .subscribe(this.<Integer>getObserver());
+    }
+
+    // scan
+    private void scan() {
+        // 1 - 3 - 6 - 10 -...
+        Observable.just(1, 2, 3, 4, 5, 6, 7)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .scan(new BiFunction<Integer, Integer, Integer>() {
+                    @Override
+                    public Integer apply(Integer integer, Integer integer2) throws Exception {
+                        return integer + integer2;
+                    }
+                })
+                .subscribe(this.<Integer>getObserver());
+    }
+
+    // replay
+    private void replay() {
+        PublishSubject<Integer> source = PublishSubject.create();
+        ConnectableObservable<Integer> connectableObservable = source.replay(3);
+        connectableObservable.connect();
+
+        Observer<Integer> observer1 = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onSubscribe");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onNext : " + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onError : " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onComplete");
+            }
+        };
+
+        Observer<Integer> observer2 = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onSubscribe");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onNext : " + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onError : " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onComplete");
+            }
+        };
+
+        connectableObservable.subscribe(observer1);
+
+        source.onNext(1);
+        source.onNext(2);
+        source.onNext(3);
+        source.onNext(4);
+        source.onNext(5);
+        source.onNext(6);
+        source.onNext(7);
+
+        connectableObservable.subscribe(observer2);
+
+        source.onNext(8);
+        source.onComplete();
+
+    }
+
+    // concat
+    private void concat() {
+        Observable<String> observable1 = Observable.just("a1", "a2", "a3", "a4", "a5", "a6");
+        Observable<String> observable2 = Observable.just("b1", "b2", "b3", "b4");
+
+        Observable.concat(observable1, observable2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<String>getObserver());
+    }
+
+    // merge
+    private void merge() {
+        Observable<String> observable1 = Observable.just("a1", "a2", "a3", "a4", "a5", "a6");
+        Observable<String> observable2 = Observable.just("b1", "b2", "b3", "b4");
+
+        Observable.merge(observable2, observable1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<String>getObserver());
+    }
+
+    // defer
+    private void defer() {
+//        List<Integer> list = Arrays.asList(1,2,3,4,5,6,7);
+//
+//        Observable<List<Integer>> observable = Observable.fromArray(list)
+//                .flatMap(new Function<List<Integer>, ObservableSource<List<Integer>>>() {
+//                    @Override
+//                    public ObservableSource<List<Integer>> apply(final List<Integer> integers) throws Exception {
+//                        return Observable.defer(new Callable<ObservableSource<List<Integer>>>() {
+//                            @Override
+//                            public ObservableSource<List<Integer>> call() throws Exception {
+//                                return Observable.fromArray(integers);
+//                            }
+//                        });
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread());
+//
+////        list.addAll(Arrays.asList(10,11,12));
+//
+//        list.add(100);
+//
+//        observable.subscribe(this.<List<Integer>>getObserver());
+
+        Car car = new Car();
+
+        Observable<String> observable = car.getDeferObservable();
+
+        car.setName("hello");
+
+        observable.subscribe(this.<String>getObserver());
+    }
+
+    //distinct
+    private void distinct() {
+        Observable.fromArray(1, 12, 1, 3, 12, 3, 3, 4, 1, 23, 3, 1, 4, 23, 1, 3)
+                .distinct()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<Integer>getObserver());
+    }
+
+    // last
+    private void last() {
+        Observable.just(1, 2, 3, 4, 5, 6)
+                .last(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Integer>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         binding.setMagicText("onSubscribe");
                     }
 
                     @Override
-                    public void onNext(List<Integer> integers) {
-                        binding.setMagicText(binding.getMagicText() + "\nonNext\n" + integers.toString());
+                    public void onSuccess(Integer integer) {
+                        binding.setMagicText(binding.getMagicText() + "\nonSuccess : " + integer);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        binding.setMagicText(binding.getMagicText() + "\nonError\n" + e.getLocalizedMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        binding.setMagicText(binding.getMagicText() + "\nonComplete");
+                        binding.setMagicText(binding.getMagicText() + "\nonError : " + e.getLocalizedMessage());
                     }
                 });
     }
 
+    // replay subject
+    private void replaySubject() {
+        ReplaySubject<Integer> source = ReplaySubject.create();
+
+        Observer<Integer> observer1 = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                binding.setMagicText("observer1 - onSubscribe");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onNext : " + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onError : " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                binding.setMagicText(binding.getMagicText() + "\nobserver1 - onComplete");
+            }
+        };
+
+        Observer<Integer> observer2 = new Observer<Integer>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onSubscribe");
+            }
+
+            @Override
+            public void onNext(Integer integer) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onNext : " + integer);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onError : " + e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onComplete() {
+                binding.setMagicText(binding.getMagicText() + "\nobserver2 - onComplete");
+            }
+        };
+
+        source.subscribe(observer1);
+
+        source.onNext(1);
+        source.onNext(2);
+        source.onNext(3);
+        source.onNext(4);
+
+        source.onComplete();
+        source.subscribe(observer2);
+    }
+
     public void showMagic(View v) {
-        filter();
+        defer();
+    }
+
+    class Car {
+        String name;
+
+        Car() {
+            name = "1";
+        }
+
+        void setName(String name) {
+            this.name = name;
+        }
+
+        Observable<String> getDeferObservable() {
+            return Observable.defer(new Callable<ObservableSource<? extends String>>() {
+                @Override
+                public ObservableSource<? extends String> call() throws Exception {
+                    return Observable.just(name);
+                }
+            });
+        }
     }
 }

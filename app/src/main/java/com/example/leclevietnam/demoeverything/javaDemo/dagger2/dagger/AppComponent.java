@@ -10,6 +10,7 @@ import com.example.leclevietnam.demoeverything.module.ActivityModule;
 import com.example.leclevietnam.demoeverything.module.AppModule;
 import com.example.leclevietnam.demoeverything.room.ProductDatabase;
 import com.example.leclevietnam.demoeverything.room.ProductRepos;
+import com.example.leclevietnam.demoeverything.room.testDatabase.student.StudentRepos;
 
 import javax.inject.Singleton;
 
@@ -27,6 +28,8 @@ public interface AppComponent {
 //    ProductDatabase getProductDatabase();
 
     ProductRepos getProductRepos();
+
+    StudentRepos getStudentRepos();
 
     void inject(DemoApplication application);
 

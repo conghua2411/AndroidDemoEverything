@@ -4,6 +4,6 @@ interface HelloRepository {
     fun giveHello(): String
 }
 
-class HelloRepositoryImpl() : HelloRepository {
+class HelloRepositoryImpl : HelloRepository {
     override fun giveHello(): String = "Hello Koin"
 }
