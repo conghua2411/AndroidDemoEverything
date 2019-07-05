@@ -1,5 +1,6 @@
 package com.example.leclevietnam.demoeverything.kotlinDemo
 
+import android.graphics.Color
 import android.util.AndroidException
 import android.util.Log
 import androidx.databinding.ObservableField
@@ -21,6 +22,8 @@ class DemoViewModel @Inject constructor(private val productRepos: ProductRepos) 
 
     var count = ObservableField(0)
     var text = ObservableField("a")
+
+    var color = ObservableField<Int>(Color.parseColor("#0000ff"))
 
     fun counting() {
 

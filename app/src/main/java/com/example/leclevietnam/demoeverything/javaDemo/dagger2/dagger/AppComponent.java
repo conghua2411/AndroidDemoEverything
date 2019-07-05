@@ -23,10 +23,6 @@ public interface AppComponent {
 
     Driver getDriver();
 
-//    Context getContext();
-//
-//    ProductDatabase getProductDatabase();
-
     ProductRepos getProductRepos();
 
     StudentRepos getStudentRepos();

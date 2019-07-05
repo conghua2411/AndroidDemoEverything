@@ -15,23 +15,28 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="20dp"
         tools:context=".rxJavaDemo.RxJavaActivity">
 
         <Button
             android:id="@+id/btnClick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="showMagic"
             android:text="click me!" />
 
-        <TextView
-            android:id="@+id/txtMagic"
-            android:text="@{magicText}"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:textSize="24sp" />
+            android:scrollbars="vertical">
+            <TextView
+                android:id="@+id/txtMagic"
+                android:text="@{magicText}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:scrollbars="vertical"
+                android:textSize="20sp" />
+        </ScrollView>
+
 
     </LinearLayout>
 </layout>

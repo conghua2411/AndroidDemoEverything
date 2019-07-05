@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -20,7 +23,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".paging.PagingActivity"></activity>
+        <activity android:name=".zxcvbn4j.zxcvbn4jActivity"></activity>
+        <activity android:name=".cognito.CognitoActivity" />
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <activity
+            android:name=".testDemo.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".paging.PagingActivity" />
         <activity android:name=".retrofit.RetrofitActivity" />
         <activity android:name=".rxJavaDemo.RxJavaActivity" />
         <activity android:name=".koinDemo.scope.KoinScopeActivity" />

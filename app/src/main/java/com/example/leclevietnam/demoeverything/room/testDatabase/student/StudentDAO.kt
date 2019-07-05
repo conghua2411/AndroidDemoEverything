@@ -1,9 +1,6 @@
 package com.example.leclevietnam.demoeverything.room.testDatabase.student
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface StudentDAO {
@@ -20,4 +17,6 @@ interface StudentDAO {
     @Query("SELECT * FROM student WHERE id = :id")
     fun selectById(id: Long?): Student
 
+    @Delete
+    fun delete(students: Student)
 }

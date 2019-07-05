@@ -40,35 +40,35 @@ class PagingViewModel @Inject constructor(
     fun loadData() {
 
         //paging + room
-//        compositeDisposable.add(
-//                productRepos.getAllProductPaging()
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe({
-//
-//                            val config = PagedList.Config.Builder()
-//                                    .setPageSize(20)
-//                                    .setInitialLoadSizeHint(30)
-//                                    .setEnablePlaceholders(false)
-//                                    .build()
-//
-////                            pagingNavigator?.updateListPaging(LivePagedListBuilder<Int, Product>(it, 10).build())
-//                            pagingNavigator?.updateListPaging(LivePagedListBuilder<Int, Product>(it, config).build())
-//                        }, {
-//                            Log.d("Paging", "PagingViewModel : error - ${it.localizedMessage}")
-//                        })
-//        )
+        compositeDisposable.add(
+                productRepos.getAllProductPaging()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+
+                            val config = PagedList.Config.Builder()
+                                    .setPageSize(20)
+                                    .setInitialLoadSizeHint(30)
+                                    .setEnablePlaceholders(false)
+                                    .build()
+
+//                            pagingNavigator?.updateListPaging(LivePagedListBuilder<Int, Product>(it, 10).build())
+                            pagingNavigator?.updateListPaging(LivePagedListBuilder<Int, Product>(it, config).build())
+                        }, {
+                            Log.d("Paging", "PagingViewModel : error - ${it.localizedMessage}")
+                        })
+        )
 
         // paging + retrofit + dataSource
-        val pagedConfig = PagedList.Config.Builder()
-                .setEnablePlaceholders(true)
-                .setInitialLoadSizeHint(10)
-                .setPageSize(20)
-                .build()
-
-        val photoLiveData: LiveData<PagedList<Photo>> = LivePagedListBuilder(photoDataFactory, pagedConfig).build()
-
-        pagingNavigator?.updatePhotos(photoLiveData)
+//        val pagedConfig = PagedList.Config.Builder()
+//                .setEnablePlaceholders(true)
+//                .setInitialLoadSizeHint(10)
+//                .setPageSize(20)
+//                .build()
+//
+//        val photoLiveData: LiveData<PagedList<Photo>> = LivePagedListBuilder(photoDataFactory, pagedConfig).build()
+//
+//        pagingNavigator?.updatePhotos(photoLiveData)
 
         //
 //        compositeDisposable.add(

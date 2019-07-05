@@ -21,8 +21,14 @@ class StudentRepos @Inject constructor(private val studentDAO: StudentDAO) {
                 studentDAO.selectAll()
             }
 
-    fun getAllStudent(id: Long): Observable<Student> =
+    fun getStudentById(id: Long): Observable<Student> =
             Observable.fromCallable {
                 studentDAO.selectById(id)
+            }
+
+    fun deleteStudent(student: Student): Observable<Boolean> =
+            Observable.fromCallable {
+                studentDAO.delete(student)
+                true
             }
 }

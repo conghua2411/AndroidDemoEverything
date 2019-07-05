@@ -2,6 +2,7 @@ package com.example.leclevietnam.demoeverything.rxJavaDemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.Flowable;
@@ -15,12 +16,14 @@ import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
-import io.reactivex.internal.operators.observable.ObservableDefer;
 import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.Single;
+import io.reactivex.subjects.AsyncSubject;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 import io.reactivex.subjects.ReplaySubject;
 
@@ -33,7 +36,7 @@ import com.example.leclevietnam.demoeverything.databinding.ActivityRxJavaBinding
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -44,12 +47,47 @@ public class RxJavaActivity extends AppCompatActivity {
 
     private ActivityRxJavaBinding binding;
 
+//    private Observable<String> btnClick;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_rx_java);
 
+        binding.setMagicText("");
+
+        // btn click more than 3 time
+//        btnClick = Observable.create(new ObservableOnSubscribe<String>() {
+//            @Override
+//            public void subscribe(final ObservableEmitter<String> emitter) throws Exception {
+//                binding.btnClick.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        emitter.onNext(String.valueOf(System.currentTimeMillis()));
+//                    }
+//                });
+//            }
+//        });
+//
+//        btnClick
+//                .buffer(1000, TimeUnit.MILLISECONDS)
+//                .filter(new Predicate<List<String>>() {
+//                    @Override
+//                    public boolean test(List<String> strings) throws Exception {
+//                        return strings.size() >= 3;
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(this.<List<String>>getObserver());
+
+        binding.btnClick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMagic();
+            }
+        });
     }
 
     // get observer
@@ -57,11 +95,13 @@ public class RxJavaActivity extends AppCompatActivity {
         return new Observer<T>() {
             @Override
             public void onSubscribe(Disposable d) {
-                binding.setMagicText("onSubscribe");
+                Log.d("rxJavaTime", "onSubscribe time : " + new Date(System.currentTimeMillis()));
+                binding.setMagicText(binding.getMagicText() + "\nonSubscribe");
             }
 
             @Override
             public void onNext(T t) {
+                Log.d("rxJavaTime", "onNext time : " + new Date(System.currentTimeMillis()));
                 binding.setMagicText(binding.getMagicText() + "\nonNext : " + t.toString());
             }
 
@@ -72,6 +112,7 @@ public class RxJavaActivity extends AppCompatActivity {
 
             @Override
             public void onComplete() {
+                Log.d("rxJavaTime", "onComplete time : " + new Date(System.currentTimeMillis()));
                 binding.setMagicText(binding.getMagicText() + "\nonComplete");
             }
         };
@@ -692,8 +733,233 @@ public class RxJavaActivity extends AppCompatActivity {
         source.subscribe(observer2);
     }
 
-    public void showMagic(View v) {
-        defer();
+    // publish subject
+    private void publishSubject() {
+        PublishSubject<String> publishSubject = PublishSubject.create();
+
+        publishSubject.subscribe(this.<String>getObserver());
+
+        publishSubject.onNext("1");
+        publishSubject.onNext("2");
+        publishSubject.onNext("3");
+
+        publishSubject.subscribe(this.<String>getObserver());
+
+        publishSubject.onNext("4");
+        publishSubject.onNext("5");
+        publishSubject.onNext("6");
+//        publishSubject.onError(new Throwable("wwwww"));
+        publishSubject.onComplete();
+
+    }
+
+    // behavior subject
+    private void behaviorSubject() {
+        BehaviorSubject<String> behaviorSubject = BehaviorSubject.create();
+        behaviorSubject.subscribe(this.<String>getObserver());
+
+        behaviorSubject.onNext("1");
+        behaviorSubject.onNext("2");
+        behaviorSubject.onNext("3");
+
+        behaviorSubject.subscribe(this.<String>getObserver());
+        behaviorSubject.onNext("4");
+        behaviorSubject.onComplete();
+
+    }
+
+    // async subject
+    private void asyncSubject() {
+        AsyncSubject<String> asyncSubject = AsyncSubject.create();
+
+        asyncSubject.subscribe(this.<String>getObserver());
+
+        asyncSubject.onNext("1");
+        asyncSubject.onNext("2");
+        asyncSubject.onNext("3");
+
+        asyncSubject.subscribe(this.<String>getObserver());
+//        asyncSubject.onNext("4");
+//        asyncSubject.onNext("5");
+        asyncSubject.onComplete();
+    }
+
+    // throttleFirst
+    private void throttleFirst() {
+
+        // the first one alway send
+        // sleep more than t time from the last send -> send
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                Thread.sleep(100);
+                emitter.onNext("1");
+                Thread.sleep(1000);
+                emitter.onNext("2");
+                Thread.sleep(499);
+                emitter.onNext("3");
+                Thread.sleep(700);
+                emitter.onNext("4");
+                emitter.onNext("5");
+                Thread.sleep(1000);
+                emitter.onNext("6");
+                emitter.onComplete();
+            }
+        })
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<String>getObserver());
+    }
+
+    // throttleLast
+    private void throttleLast() {
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                emitter.onNext("1");
+                Thread.sleep(1000);
+                emitter.onNext("2");
+                Thread.sleep(50);
+                emitter.onNext("3");
+                Thread.sleep(50);
+                emitter.onNext("4");
+                Thread.sleep(50);
+                emitter.onNext("5");
+                Thread.sleep(50);
+                emitter.onNext("6");
+                Thread.sleep(50);
+                emitter.onNext("7");
+                Thread.sleep(50);
+                emitter.onNext("8");
+                Thread.sleep(50);
+                emitter.onNext("9");
+                Thread.sleep(50);
+                emitter.onNext("10");
+                Thread.sleep(50);
+                emitter.onNext("11");
+                Thread.sleep(50);
+                emitter.onNext("12");
+                Thread.sleep(50);
+                emitter.onNext("13");
+                Thread.sleep(700);
+                emitter.onNext("14");
+                Thread.sleep(251);
+                emitter.onComplete();
+            }
+        })
+                .throttleLast(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<String>getObserver());
+    }
+
+    // debounce
+    private void debounce() {
+        Observable.create(new ObservableOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+                emitter.onNext(1);
+                Thread.sleep(100);
+                emitter.onNext(2);
+                Thread.sleep(100);
+                emitter.onNext(3);
+                Thread.sleep(100);
+                emitter.onNext(4);
+                Thread.sleep(300);
+                emitter.onNext(5);
+                Thread.sleep(501);
+                emitter.onNext(6);
+                Thread.sleep(200);
+                emitter.onNext(7);
+                Thread.sleep(200);
+                emitter.onComplete();
+            }
+        })
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<Integer>getObserver());
+    }
+
+    // window
+    private void window() {
+        Observable.interval(1, TimeUnit.SECONDS).take(20)
+                .window(4, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Observable<Long>>() {
+                    @Override
+                    public void accept(Observable<Long> longObservable) throws Exception {
+                        binding.setMagicText(binding.getMagicText() + "\nNew window : ");
+                        longObservable
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<Long>() {
+                                    @Override
+                                    public void accept(Long aLong) throws Exception {
+                                        binding.setMagicText(binding.getMagicText() + "\nNext: " + aLong);
+                                    }
+                                });
+                    }
+                });
+    }
+
+    // delay
+    private void delay() {
+        Observable.just(1, 2, 3, 4)
+                .delay(2, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<Integer>getObserver());
+    }
+
+    // switchMap
+    private void switchMap() {
+        Observable.just(1, 2, 3, 4, 5)
+                .switchMap(new Function<Integer, ObservableSource<String>>() {
+                    @Override
+                    public ObservableSource<String> apply(Integer integer) throws Exception {
+                        return Observable.just(integer.toString() + "x");
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<String>getObserver());
+    }
+
+    // test 2 observable waiting
+    private void testObser() {
+        Observable<String> observable1 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                Thread.sleep(3000);
+                emitter.onNext("hello");
+            }
+        });
+
+        Observable<String> observable2 = Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> emitter) throws Exception {
+                Thread.sleep(2000);
+                emitter.onNext("world");
+            }
+        });
+
+        Observable.zip(observable1, observable2, new BiFunction<String, String, String>() {
+            @Override
+            public String apply(String o, String o2) throws Exception {
+                return o + o2;
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this.<String>getObserver());
+    }
+
+    public void showMagic() {
+        testObser();
     }
 
     class Car {

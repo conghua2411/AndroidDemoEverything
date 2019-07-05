@@ -10,6 +10,7 @@ import com.example.leclevietnam.demoeverything.annotationProcessing.AnnoProcessA
 import com.example.leclevietnam.demoeverything.automateViewPager.AutoPagerActivity
 import com.example.leclevietnam.demoeverything.camera2.Camera2Activity
 import com.example.leclevietnam.demoeverything.cameraDemo.CameraActivity
+import com.example.leclevietnam.demoeverything.cognito.CognitoActivity
 import com.example.leclevietnam.demoeverything.constraintDemo.ConstraintActivity
 import com.example.leclevietnam.demoeverything.customEditTextNoteUnderLine.CustomNoteUnderLineActivity
 import com.example.leclevietnam.demoeverything.extendBottomSheet.BottomSheetActivity
@@ -23,6 +24,8 @@ import com.example.leclevietnam.demoeverything.recordSurfaceView.RecordSufaceAct
 import com.example.leclevietnam.demoeverything.retrofit.RetrofitActivity
 import com.example.leclevietnam.demoeverything.rxJavaDemo.RxJavaActivity
 import com.example.leclevietnam.demoeverything.socketDemo.SocketDemo
+import com.example.leclevietnam.demoeverything.testDemo.TestActivity
+import com.example.leclevietnam.demoeverything.zxcvbn4j.zxcvbn4jActivity
 
 class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListener  {
 
@@ -48,6 +51,9 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
         private const val RX_JAVA_DEMO = "RX_JAVA_DEMO"
         private const val RETROFIT_DEMO = "RETROFIT_DEMO"
         private const val PAGING_DEMO = "PAGING_DEMO"
+        private const val TEST_DEMO = "TEST_DEMO"
+        private const val COGNITO_DEMO = "COGNITO_DEMO"
+        private const val zxcvbn4j_DEMO = "zxcvbn4j_DEMO"
     }
 
     private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
@@ -80,7 +86,10 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
                 KOIN_DEMO,
                 RX_JAVA_DEMO,
                 RETROFIT_DEMO,
-                PAGING_DEMO)
+                PAGING_DEMO,
+                TEST_DEMO,
+                COGNITO_DEMO,
+                zxcvbn4j_DEMO)
 
         viewAdapter = RecyclerDemoListAdapter(listDemo, this)
 
@@ -155,6 +164,15 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
             }
             PAGING_DEMO -> {
                 startActivity(Intent(this, PagingActivity::class.java))
+            }
+            TEST_DEMO -> {
+                startActivity(Intent(this, TestActivity::class.java))
+            }
+            COGNITO_DEMO -> {
+                startActivity(Intent(this, CognitoActivity::class.java))
+            }
+            zxcvbn4j_DEMO -> {
+                startActivity(Intent(this, zxcvbn4jActivity::class.java))
             }
             else -> {
                 Log.d("onClick_main", "demo name : $demoName")
