@@ -1,6 +1,7 @@
 package com.example.leclevietnam.demoeverything
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,7 +14,9 @@ import com.example.leclevietnam.demoeverything.cameraDemo.CameraActivity
 import com.example.leclevietnam.demoeverything.cognito.CognitoActivity
 import com.example.leclevietnam.demoeverything.constraintDemo.ConstraintActivity
 import com.example.leclevietnam.demoeverything.customEditTextNoteUnderLine.CustomNoteUnderLineActivity
+import com.example.leclevietnam.demoeverything.deepLinkDemo.DeepLinkDemo
 import com.example.leclevietnam.demoeverything.extendBottomSheet.BottomSheetActivity
+import com.example.leclevietnam.demoeverything.googlePay.GooglePayActivity
 import com.example.leclevietnam.demoeverything.javaDemo.JavaDemoActivity
 import com.example.leclevietnam.demoeverything.koinDemo.KoinActivity
 import com.example.leclevietnam.demoeverything.kotlinDemo.KotlinDemoActivity
@@ -23,6 +26,8 @@ import com.example.leclevietnam.demoeverything.paging.PagingActivity
 import com.example.leclevietnam.demoeverything.recordSurfaceView.RecordSufaceActivity
 import com.example.leclevietnam.demoeverything.retrofit.RetrofitActivity
 import com.example.leclevietnam.demoeverything.rxJavaDemo.RxJavaActivity
+import com.example.leclevietnam.demoeverything.s3.S3Activity
+import com.example.leclevietnam.demoeverything.simInfoDemo.SimInfoActivity
 import com.example.leclevietnam.demoeverything.socketDemo.SocketDemo
 import com.example.leclevietnam.demoeverything.testDemo.TestActivity
 import com.example.leclevietnam.demoeverything.zxcvbn4j.zxcvbn4jActivity
@@ -54,6 +59,10 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
         private const val TEST_DEMO = "TEST_DEMO"
         private const val COGNITO_DEMO = "COGNITO_DEMO"
         private const val zxcvbn4j_DEMO = "zxcvbn4j_DEMO"
+        private const val S3_DEMO = "S3_DEMO"
+        private const val GOOGLE_PAY = "GOOGLE_PAY"
+        private const val DEEP_LINK_DEMO = "DEEP_LINK_DEMO"
+        private const val SIM_INFO_DEMO = "SIM_INFO_DEMO"
     }
 
     private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
@@ -89,7 +98,11 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
                 PAGING_DEMO,
                 TEST_DEMO,
                 COGNITO_DEMO,
-                zxcvbn4j_DEMO)
+                zxcvbn4j_DEMO,
+                S3_DEMO,
+                GOOGLE_PAY,
+                DEEP_LINK_DEMO,
+                SIM_INFO_DEMO)
 
         viewAdapter = RecyclerDemoListAdapter(listDemo, this)
 
@@ -99,6 +112,18 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
             layoutManager = viewManager
 
             adapter = viewAdapter
+        }
+
+//        val action: String? = intent?.action
+        val data: Uri? = intent?.data
+
+        if (data != null) {
+            if (data.host == "deeplinkdemo") {
+
+                val str = data.getQueryParameter("type")
+
+                startActivity(Intent(this, DeepLinkDemo::class.java).putExtra("type", str))
+            }
         }
 
     }
@@ -173,6 +198,18 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
             }
             zxcvbn4j_DEMO -> {
                 startActivity(Intent(this, zxcvbn4jActivity::class.java))
+            }
+            S3_DEMO -> {
+                startActivity(Intent(this, S3Activity::class.java))
+            }
+            GOOGLE_PAY -> {
+                startActivity(Intent(this, GooglePayActivity::class.java))
+            }
+            DEEP_LINK_DEMO -> {
+                startActivity(Intent(this, DeepLinkDemo::class.java))
+            }
+            SIM_INFO_DEMO -> {
+                startActivity(Intent(this, SimInfoActivity::class.java))
             }
             else -> {
                 Log.d("onClick_main", "demo name : $demoName")

@@ -23,10 +23,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".zxcvbn4j.zxcvbn4jActivity"></activity>
+        <activity android:name=".simInfoDemo.SimInfoActivity"></activity>
+        <activity android:name=".deepLinkDemo.DeepLinkDemo" /> <!-- <intent-filter android:label="@string/filter_view_http_gizmos"> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+        <!-- &lt;!&ndash; Accepts URIs that begin with "http://www.example.com/gizmos” &ndash;&gt; -->
+        <!-- <data android:scheme="http" -->
+        <!-- android:host="www.example.com" -->
+        <!-- android:pathPrefix="/gizmos" /> -->
+        <!-- &lt;!&ndash; note that the leading "/" is required for pathPrefix&ndash;&gt; -->
+        <!-- </intent-filter> -->
+        <!-- <intent-filter android:label="DeepLinkDemo"> -->
+        <!-- <action android:name="android.intent.action.VIEW" /> -->
+        <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+        <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+        <!-- &lt;!&ndash; Accepts URIs that begin with "deeplinkdemo://deeplinkdemo” &ndash;&gt; -->
+        <!-- <data android:scheme="deeplinkdemo" -->
+        <!-- android:host="deeplinkdemo" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
+        <activity android:name=".googlePay.GooglePayActivity" />
+        <activity android:name=".s3.S3Activity" />
+        <activity android:name=".zxcvbn4j.zxcvbn4jActivity" />
         <activity android:name=".cognito.CognitoActivity" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService" />
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
 
         <activity
             android:name=".testDemo.TestActivity"
@@ -46,8 +75,7 @@
         <activity android:name=".javaDemo.JavaDemoActivity" />
         <activity android:name=".socketDemo.SocketDemo" />
         <activity android:name=".FilterScreenRecord.main_activity" />
-        <activity android:name=".mediaProjectionDemo.MediaProjectionACtivity" />
-        <activity android:name=".javaCVDemo.RecordActivity" />
+        <activity android:name=".mediaProjectionDemo.MediaProjectionACtivity" /> <!-- <activity android:name=".javaCVDemo.RecordActivity" /> -->
         <activity
             android:name=".recordSurfaceView.RecordSufaceActivity"
             android:screenOrientation="portrait" />
@@ -61,6 +89,27 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- <intent-filter android:label="@string/filter_view_http_gizmos"> -->
+            <!-- <action android:name="android.intent.action.VIEW" /> -->
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- <category android:name="android.intent.category.BROWSABLE" /> -->
+            <!-- &lt;!&ndash; Accepts URIs that begin with "http://www.example.com/gizmos” &ndash;&gt; -->
+            <!-- <data android:scheme="http" -->
+            <!-- android:host="www.example.com" -->
+            <!-- android:pathPrefix="/gizmos" /> -->
+            <!-- &lt;!&ndash; note that the leading "/" is required for pathPrefix&ndash;&gt; -->
+            <!-- </intent-filter> -->
+            <intent-filter android:label="DeepLinkDemo">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "deeplinkdemo://deeplinkdemo” -->
+                <data
+                    android:host="deeplinkdemo"
+                    android:scheme="deeplinkdemo" />
             </intent-filter>
         </activity>
         <activity android:name=".customEditTextNoteUnderLine.CustomNoteUnderLineActivity" />

@@ -117,7 +117,7 @@ class CognitoActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnSignIn).setOnClickListener {
-            AWSMobileClient.getInstance().signIn("conghua2411@yopmail.com", "123456", null, object : Callback<SignInResult> {
+            AWSMobileClient.getInstance().signIn("conghua2411@yopmail.com", "qwerty", null, object : Callback<SignInResult> {
                 override fun onResult(result: SignInResult?) {
                     Log.d("CognitoActivity", "signin result : ${result?.signInState}")
 

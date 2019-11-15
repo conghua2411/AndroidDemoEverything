@@ -163,4 +163,7 @@ dependencies {
 
     // zxcvbn4j
     implementation 'com.nulab-inc:zxcvbn:1.2.5'
+
+    // google pay
+    implementation 'com.google.android.gms:play-services-wallet:17.0.0'
 }
