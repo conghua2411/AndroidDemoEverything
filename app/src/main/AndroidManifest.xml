@@ -12,6 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -23,7 +25,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".simInfoDemo.SimInfoActivity"></activity>
+        <activity android:name=".kakao_auth.SampleSignupActivity"></activity>
+        <activity android:name=".kakao_auth.KakaoAuthActivity" />
+        <activity android:name=".backgroundCheckInternet.BackgroundInternet" />
+        <activity android:name=".simInfoDemo.SimInfoActivity" />
         <activity android:name=".deepLinkDemo.DeepLinkDemo" /> <!-- <intent-filter android:label="@string/filter_view_http_gizmos"> -->
         <!-- <action android:name="android.intent.action.VIEW" /> -->
         <!-- <category android:name="android.intent.category.DEFAULT" /> -->
@@ -56,6 +61,14 @@
         <service
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
+
+        <receiver android:name=".backgroundCheckInternet.ConnectivityChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".backgroundCheckInternet.InternetService" />
 
         <activity
             android:name=".testDemo.TestActivity"
@@ -124,7 +137,10 @@
         <service
             android:name=".alarmRepeat.AlarmJobService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".alarmRepeat.AlarmService" />
+        <service android:name=".alarmRepeat.AlarmService" /> <!-- kakao -->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
     </application>
 
 </manifest>

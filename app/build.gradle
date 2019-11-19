@@ -166,4 +166,12 @@ dependencies {
 
     // google pay
     implementation 'com.google.android.gms:play-services-wallet:17.0.0'
+
+    implementation 'com.kakao.sdk:usermgmt:1.16.0'
+    implementation 'com.kakao.sdk:kakaotalk:1.16.0'
+    implementation 'com.kakao.sdk:kakaolink:1.16.0'
+    implementation 'com.kakao.sdk:plusfriend:1.16.0'
+
+    implementation 'com.google.firebase:firebase-core:17.2.1'
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
 }

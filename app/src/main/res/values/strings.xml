@@ -13,4 +13,6 @@
     <string name="text_search_result">text search : %s\n%s</string>
     <string name="cat_n">cat %s</string>
     <string name="title_activity_test">TestActivity</string>
+
+    <string name="kakao_app_key">e860926f6cfa048fd3f766f88c97ea1e</string>
 </resources>

@@ -9,6 +9,7 @@ import com.example.leclevietnam.demoeverything.SnapRecyclerDemo.SnapRecyclerActi
 import com.example.leclevietnam.demoeverything.alarmRepeat.AlarmActivity
 import com.example.leclevietnam.demoeverything.annotationProcessing.AnnoProcessActivity
 import com.example.leclevietnam.demoeverything.automateViewPager.AutoPagerActivity
+import com.example.leclevietnam.demoeverything.backgroundCheckInternet.BackgroundInternet
 import com.example.leclevietnam.demoeverything.camera2.Camera2Activity
 import com.example.leclevietnam.demoeverything.cameraDemo.CameraActivity
 import com.example.leclevietnam.demoeverything.cognito.CognitoActivity
@@ -18,6 +19,7 @@ import com.example.leclevietnam.demoeverything.deepLinkDemo.DeepLinkDemo
 import com.example.leclevietnam.demoeverything.extendBottomSheet.BottomSheetActivity
 import com.example.leclevietnam.demoeverything.googlePay.GooglePayActivity
 import com.example.leclevietnam.demoeverything.javaDemo.JavaDemoActivity
+import com.example.leclevietnam.demoeverything.kakao_auth.KakaoAuthActivity
 import com.example.leclevietnam.demoeverything.koinDemo.KoinActivity
 import com.example.leclevietnam.demoeverything.kotlinDemo.KotlinDemoActivity
 import com.example.leclevietnam.demoeverything.mediaProjectionDemo.MediaProjectionACtivity
@@ -63,6 +65,8 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
         private const val GOOGLE_PAY = "GOOGLE_PAY"
         private const val DEEP_LINK_DEMO = "DEEP_LINK_DEMO"
         private const val SIM_INFO_DEMO = "SIM_INFO_DEMO"
+        private const val BACKGROUND_INTERNET = "BACKGROUND_INTERNET"
+        private const val KAKAO_AUTH = "KAKAO_AUTH"
     }
 
     private lateinit var recyclerView: androidx.recyclerview.widget.RecyclerView
@@ -102,7 +106,9 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
                 S3_DEMO,
                 GOOGLE_PAY,
                 DEEP_LINK_DEMO,
-                SIM_INFO_DEMO)
+                SIM_INFO_DEMO,
+                BACKGROUND_INTERNET,
+                KAKAO_AUTH)
 
         viewAdapter = RecyclerDemoListAdapter(listDemo, this)
 
@@ -210,6 +216,12 @@ class MainActivity : AppCompatActivity(), RecyclerDemoListAdapter.DemoListListen
             }
             SIM_INFO_DEMO -> {
                 startActivity(Intent(this, SimInfoActivity::class.java))
+            }
+            BACKGROUND_INTERNET -> {
+                startActivity(Intent(this, BackgroundInternet::class.java))
+            }
+            KAKAO_AUTH -> {
+                startActivity(Intent(this, KakaoAuthActivity::class.java))
             }
             else -> {
                 Log.d("onClick_main", "demo name : $demoName")
